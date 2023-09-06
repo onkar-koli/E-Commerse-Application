@@ -41,9 +41,9 @@ public class InventoryController {
 		return inventoryMgmtService.update(id, inventoryDto);
 	}
 	
-	@PostMapping("/updatebyproductid")
-	public ResponseEntity<?> updateByProductId(@RequestBody InventoryDto inventoryDto){
-		return inventoryMgmtService.updateByProductId(inventoryDto);
+	@PostMapping("/updatesaleinventory")
+	public ResponseEntity<?> updateSaleInventory(@RequestBody InventoryDto inventoryDto){
+		return inventoryMgmtService.updateSaleInventory(inventoryDto);
 	}
  
 }

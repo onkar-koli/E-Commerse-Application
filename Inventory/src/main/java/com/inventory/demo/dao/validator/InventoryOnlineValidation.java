@@ -12,6 +12,6 @@ public interface InventoryOnlineValidation {
 
 	void update(String inventoryId, String productId);
 
-	void updateByProductId(String productId);
+	void updateSaleInventory(String productId);
 
 }

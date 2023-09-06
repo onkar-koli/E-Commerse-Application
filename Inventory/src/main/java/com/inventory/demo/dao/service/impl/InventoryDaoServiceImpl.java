@@ -43,7 +43,7 @@ public class InventoryDaoServiceImpl implements InventoryDaoService {
 	}
 
 	@Override
-	public Inventory updateStock(Inventory inventory) {
+	public Inventory updateSaleInventory(Inventory inventory) {
 		Inventory old = getbyProductId(inventory.getProductId().toString());
 		inventoryRepository.delete(old);
 		old.setAvailableStock(old.getAvailableStock()-inventory.getAvailableStock());

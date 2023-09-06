@@ -12,6 +12,6 @@ public interface InventoryOfflineValidation {
 
 	void updateById(String id, InventoryDto inventoryDto);
 
-	void updateByProductId(InventoryDto inventoryDto);
+	void updateSaleInventory(InventoryDto inventoryDto);
 
 }

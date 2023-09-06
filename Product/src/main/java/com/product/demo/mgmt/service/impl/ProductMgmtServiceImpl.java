@@ -8,7 +8,7 @@ import com.product.demo.dao.entity.Product;
 import com.product.demo.dao.service.ProductDaoService;
 import com.product.demo.mgmt.exception.ValidationException;
 import com.product.demo.mgmt.service.EcomResponceService;
-import com.product.demo.mgmt.service.InventoryRestService;
+import com.product.demo.mgmt.service.InventoryFeignClient;
 import com.product.demo.mgmt.service.ProductMgmtService;
 import com.product.demo.mgmt.util.ProductUtil;
 import com.product.demo.mgmt.validator.ProductValidator;
@@ -28,7 +28,7 @@ public class ProductMgmtServiceImpl implements ProductMgmtService {
 	private EcomResponceService ecomResponceService;
 
 	@Autowired
-	private InventoryRestService inventoryRestService;
+	private InventoryFeignClient inventoryFeignClient;
 	
 	@Override
 	public ResponseEntity<?> add(ProductDto productDto) {
@@ -38,7 +38,7 @@ public class ProductMgmtServiceImpl implements ProductMgmtService {
 			productValidator.add(productDto);
 			Product product = ProductUtil.getEntity(productDto);
 			product = productDaoService.add(product);
-			inventoryRestService.add(getInventoryDto(product));
+			inventoryFeignClient.addInventory(getInventoryDto(product));
 			res = ecomResponceService.getSuccesResponce(ProductUtil.getModel(product));
 		} catch (ValidationException e) {
 			res = ecomResponceService.getUncheckedExceptionResponce(e);

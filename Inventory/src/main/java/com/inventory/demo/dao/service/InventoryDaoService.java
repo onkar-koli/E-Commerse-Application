@@ -12,6 +12,6 @@ public interface InventoryDaoService {
 	
 	Inventory updateStock(String id, Inventory inventory);
 
-	Inventory updateStock(Inventory inventory);
+	Inventory updateSaleInventory(Inventory inventory);
 
 }

@@ -52,9 +52,9 @@ public class InventoryValidatorImpl implements InventoryValidator {
 	}
 
 	@Override
-	public void updateByProductId(InventoryDto inventoryDto) {
-		inventoryOfflineValidation.updateByProductId(inventoryDto);
-		inventoryOnlineValidation.updateByProductId(inventoryDto.getProductId());
+	public void updateSaleInventory(InventoryDto inventoryDto) {
+		inventoryOfflineValidation.updateSaleInventory(inventoryDto);
+		inventoryOnlineValidation.updateSaleInventory(inventoryDto.getProductId());
 	}
 	
 }

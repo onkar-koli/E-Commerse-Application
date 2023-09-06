@@ -30,7 +30,7 @@ public class InventoryOfflineValidationImpl implements InventoryOfflineValidatio
 	}
 
 	@Override
-	public void updateByProductId(InventoryDto inventoryDto) {
+	public void updateSaleInventory(InventoryDto inventoryDto) {
 		offlineValidator.checkProductId(inventoryDto.getProductId());
 		offlineValidator.checkInventoryStock(inventoryDto.getInventoryStock());
 	}

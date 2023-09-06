@@ -90,13 +90,13 @@ public class InventoryMgmtServiceImpl implements InventoryMgmtService {
 	}
 
 	@Override
-	public ResponseEntity<?> updateByProductId(InventoryDto inventoryDto) {
+	public ResponseEntity<?> updateSaleInventory(InventoryDto inventoryDto) {
 
 		ResponseEntity<?> res = null;
 		try {
-			inventoryValidator.updateByProductId(inventoryDto);
+			inventoryValidator.updateSaleInventory(inventoryDto);
 			Inventory newI = InventoryUtil.getEntity(inventoryDto);
-			res = ecomResponceService.getSuccesResponce(inventoryDaoService.updateStock(newI));
+			res = ecomResponceService.getSuccesResponce(inventoryDaoService.updateSaleInventory(newI));
 		} catch (ValidationException e) {
 			res = ecomResponceService.getUncheckedExceptionResponce(e);
 		} catch (Exception e) {

@@ -14,6 +14,6 @@ public interface InventoryMgmtService {
 	
 	ResponseEntity<?> update(String id, InventoryDto inventoryDto);
 
-	ResponseEntity<?> updateByProductId(InventoryDto inventoryDto);
+	ResponseEntity<?> updateSaleInventory(InventoryDto inventoryDto);
 
 }

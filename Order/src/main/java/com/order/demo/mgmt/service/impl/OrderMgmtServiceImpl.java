@@ -1,14 +1,17 @@
 package com.order.demo.mgmt.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.order.demo.dao.entity.Order;
 import com.order.demo.dao.service.OrderDaoService;
 import com.order.demo.mgmt.exception.ValidationException;
 import com.order.demo.mgmt.service.EcomResponceService;
 import com.order.demo.mgmt.service.InventoryRestService;
+import com.order.demo.mgmt.service.KafkaPublisher;
 import com.order.demo.mgmt.service.OrderMgmtService;
 import com.order.demo.mgmt.util.OrderUtil;
 import com.order.demo.mgmt.validator.OrderValidator;
@@ -29,6 +32,12 @@ public class OrderMgmtServiceImpl implements OrderMgmtService {
 	
 	@Autowired
 	private InventoryRestService inventoryRestService;
+	
+	@Autowired
+	private KafkaPublisher kafkaPublisher; 
+	
+	@Value("${kafka.topic.order}")
+	private String orderTopic;
 
 	@Override
 	public ResponseEntity<?> newOrder(OrderDto orderDto) {
@@ -39,7 +48,9 @@ public class OrderMgmtServiceImpl implements OrderMgmtService {
 			Order newOrder = orderDaoService.newOrder(OrderUtil.getEntity(orderDto));
 			InventoryDto inventoryDto = getInventoryModel(orderDto);
 			inventoryRestService.updateByProductId(inventoryDto);
-			res = ecomResponceService.getSuccesResponce(OrderUtil.getModel(newOrder));
+			OrderDto orderRes = OrderUtil.getModel(newOrder);
+			kafkaPublisher.sendMessage(orderTopic, "Order Placed : "+ new ObjectMapper().writeValueAsString(orderRes));
+			res = ecomResponceService.getSuccesResponce(orderRes);
 		} catch (ValidationException e) {
 			res =ecomResponceService.getUncheckedExceptionResponce(e);
 		} catch (Exception e) {

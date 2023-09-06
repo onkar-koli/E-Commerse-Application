@@ -61,7 +61,7 @@ public class InventoryOnlineValidationImpl implements InventoryOnlineValidation 
 	}
 
 	@Override
-	public void updateByProductId(String productId) {
+	public void updateSaleInventory(String productId) {
 
 		Inventory inventory = inventoryDaoService.getbyProductId(productId);
 		if(inventory == null) {
